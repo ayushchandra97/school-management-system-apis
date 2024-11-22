@@ -16,10 +16,11 @@ async function createAdmin(req, res) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
+    console.log(hashedPassword)
 
     const admin = new Admin({
       username,
-      hashedPassword,
+      password: hashedPassword,
     })
 
     await admin.save()

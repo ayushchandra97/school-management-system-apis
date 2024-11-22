@@ -28,8 +28,6 @@ app.use("/api/exams", examRoutes)
 app.use("/api/results", resultRoutes)
 app.use("/api/report", reportRoute)
 
-app.use(errorHandler)
-
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {

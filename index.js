@@ -15,7 +15,7 @@ const reportRoute = require("./routes/reportRoute")
 const app = express()
 
 app.use(express.json())
-app.use(express.urlencoded({ limit: "10mb", extended: false }))
+app.use(express.urlencoded({ limit: "10mb", extended: true }))
 
 connectDB()
 

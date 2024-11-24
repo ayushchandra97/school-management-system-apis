@@ -17,22 +17,28 @@ async function addTeacher(req, res) {
     }
 
     let response = null
+    console.log("Just before req.file")
     if (req.file) {
-      response = uploadAndGetImageUrl(req.file.buffer, "teachers")
-
-      if (response.error) {
-        res
-          .status(response.status)
-          .json({ message: "Error uploading file or getting URL" })
-        return
-      }
+      console.log(req.file.originalname)
+      response = await uploadAndGetImageUrl(req.file.path, "teachers")
+      console.log(response)
     }
+
+    if (response.message) {
+      res
+        .status(response.status)
+        .json({ message: "Error uploading file or getting URL" })
+      return
+    }
+    console.log("Working fine so far!")
     const teacher = new Teacher({
       name,
       email,
       subject,
       profileImageUrl: response,
     })
+
+    console.log(teacher)
 
     await teacher.save()
     res.status(201).json({ message: "Teacher added successfully", teacher })
@@ -76,10 +82,11 @@ async function getAllTeachers(req, res) {
 async function getTeacher(req, res) {
   try {
     const { id } = req.params
+    console.log(id)
     if (!id) {
       return res.status(400).json({ message: "Missing ID" })
     }
-    const teacher = await Teacher.findOne({ id })
+    const teacher = await Teacher.findById(id)
     res
       .status(200)
       .json({ message: "Teacher data fetched successfully", teacher })

@@ -18,7 +18,7 @@ const studentSchema = new mongoose.Schema({
   },
   profileImageUrl: {
     type: String,
-    unique: true,
+    default: null,
   },
   createdAt: {
     type: Date,
